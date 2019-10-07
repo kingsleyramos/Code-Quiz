@@ -127,7 +127,7 @@ var questions = [
     {
         title: "Which HTML element is used to specify a header for a document or section?",
         choices: ["<header>","<section>","<top>","<head>"],
-        answer: ""
+        answer: "<header>"
     },
   ];
   
