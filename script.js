@@ -1,133 +1,201 @@
-var questions = [
-    {
-        title: "Inside which HTML element do we put the JavaScript?",
-        choices: ["<script>","<scripting>","<javascript>","<js>"],
-        answer: "<script>"
-    },
-    {
-        title: "Where is the correct place to insert a JavaScript?",
-        choices: ["The <head> section","Both the <head> section and the <body> section are correct","The <body> section","Neither"],
-        answer: "The <body> section"
-    },
-    {
-        title: "WThe external JavaScript file must contain the <script> tag.",
-        choices: ["True","False"],
-        answer: "False"
-    },
-    {
-        title: "How do you write \"Hello World\" in an alert box?",
-        choices: ["msg(\"Hello World\");","alert(\"Hello World\");","msgBox(\"Hello World\");","alertBox(\"Hello World\");"],
-        answer: "alert(\"Hello World\");"
-    },
-    {
-        title: "How do you create a function in Javascript?",
-        choices: ["function myFunction()","function:myFuction","fuction = myFunction()"],
-        answer: "function myFunction()"
-    },
-    {
-        title: "How do you call a function named \"myFunction\"?",
-        choices: ["call myFunction","call function myFunction()","myFunction()"],
-        answer: "myFunction()"
-    },
-    {
-        title: "How do you write an IF statment in Javascript?",
-        choices: ["if i == 5 then","if i = 5 then","if (i == 5)","if i = 5"],
-        answer: "if (i == 5)"
-    },
-    {
-        title: "How to write an IF statement for executing some code if \"i\" is NOT equal to 5?",
-        choices: ["if i <> 5","if (i <> 5)","if i=! 5 then","if (i != 5)"],
-        answer: "if (i != 5)"
-    },
-    {
-        title: "How does a WHILE loop start?",
-        choices: ["while i = 1 to 10","while (i <= 10)","while (i <= 10; i++)","while (i)"],
-        answer: "while (i <= 10)"
-    },
-    {
-        title: "How does a FOR loop start?",
-        choices: ["for i = 1 to 5","for (i <= 5; i++)","for (i = 0; i <= 5; i++)","for (i = 0; i <= 5)"],
-        answer: "for (i = 0; i <= 5; i++)"
-    },
-    {
-        title: "How can you add a comment in a JavaScript",
-        choices: ["'This is a comment","//this is a comment","<!--This is a comment-->"],
-        answer: "//this is a comment"
-    },
-    {
-        title: "What is the correct way to write a JavaScript array?",
-        choices: ["var colors = \"red\", \"green\", \"blue\"","var colors = [\"red\", \"green\", \"blue\"]","var colors = (1:\"red\", 2:\"green\", 3:\"blue\")","var colors = 1 = (\"red\"), 2 = (\"green\"), 3 = (\"blue\")"],
-        answer: "var colors = [\"red\", \"green\", \"blue\"]"
-    },
-    {
-        title: "What does HTML stand for?",
-        choices: ["Home Tool Markup Language","Hyper Text Markup Language","Hyperlinks and Text Markup Language"],
-        answer: "Hyper Text Markup Language"
-    },
-    {
-        title: "Choose the correct HTML element for the largest heading:",
-        choices: ["<h6>","<head>","<h1>","<heading>"],
-        answer: "<h1>"
-    },
-    {
-        title: "What is the correct HTML element for inserting a line break?",
-        choices: ["<lb>","<break>","<br>"],
-        answer: "<br>"
-    },
-    {
-        title: "What is the correct HTML for adding a background color?",
-        choices: ["<body bg=\"yellow\">","<body style=\"background-color:yellow;\">"," <background>yellow</background>"],
-        answer: "<body style=\"background-color:yellow;\">"
-    },
-    {
-        title: "Choose the correct HTML element to define important text",
-        choices: ["<b>","<i>","<important>","<strong>"],
-        answer: ""
-    },
-    {
-        title: "Choose the correct HTML element to define emphasized text",
-        choices: ["<i>","<em>","<italic>"],
-        answer: "<i>"
-    },
-    {
-        title: "Which character is used to indicate an end tag?",
-        choices: ["/","<","*","^"],
-        answer: "/"
-    },
-    {
-        title: "How can you make a numbered list?",
-        choices: ["<ol>","<list>","<ul>","<dl>"],
-        answer: "<ol>"
-    },
-    {
-        title: "What is the correct HTML for inserting an image?",
-        choices: ["<img href=\"image.gif\" alt=\"MyImage\">"," <image src=\"image.gif\" alt=\"MyImage\">","<img alt=\"MyImage\">image.gif</img>"," <img src=\"image.gif\" alt=\"MyImage\">"],
-        answer: "<image src=\"image.gif\" alt=\"MyImage\">"
-    },
-    {
-        title: "Which HTML element defines the title of a document?",
-        choices: ["<meta>","<head>","<title>","<header>"],
-        answer: "<title>"
-    },
-    {
-        title: "What is the correct HTML for making a text area?",
-        choices: ["<input type=\"textarea\">","<input type=\"textbox\">","<textarea>"],
-        answer: "<textarea>"
-    },
-    {
-        title: "An <iframe> is used to display a web page within a web page.",
-        choices: ["True","False","There is no such thing as an <iframe>"],
-        answer: "True"
-    },
-    {
-        title: "Which HTML attribute specifies an alternate text for an image, if the image cannot be displayed?",
-        choices: ["alt","title","src","longdesc"],
-        answer: "alt"
-    },
-    {
-        title: "Which HTML element is used to specify a header for a document or section?",
-        choices: ["<header>","<section>","<top>","<head>"],
-        answer: ""
-    },
-  ];
+// Create all necessary elements
+var h2El = document.createElement("h2");
+var descriptionEl = document.createElement("p");
+var startButton = document.createElement("button");
+    // Question Elements
+    var questionEl = document.createElement("h5");
+    var answer1 = document.createElement("button");
+    var answer2 = document.createElement("button");
+    var answer3 = document.createElement("button");
+    var answer4 = document.createElement("button");
+
+
+//Main Area Elemenent
+var quizEl = document.getElementById("quizArea");
+var brEl = document.createElement("br");
+
+var nameEl = document.createElement("div");
+var favoriteEl = document.createElement("div");
+var listEl = document.createElement("ol");
+
+
+
+renderQuestion();
+
+
+
+// Function for Start Screen
+function start(){
+
+    // Clears screen of any elements
+    clearScreen();
+
+    // Setting all elements wthin Quiz Area
+    quizEl.setAttribute("class","col-md-6 bg-light text-center pt-2")
+
+    // Title
+    h2El.textContent = "Code Quiz Challenge";
+    h2El.setAttribute("class","text-center");
+    quizEl.appendChild(h2El);
+
+    // Descroption
+    descriptionEl.textContent = "Answer as many questions correctly as possible within the allotted time. Any questions not answered correctly will deduct time. Good luck!";
+    quizEl.appendChild(descriptionEl);
+
+    //Start Button
+    startButton.innerHTML = "Start!";
+    startButton.setAttribute("type", "button");
+    startButton.setAttribute("class","btn btn-primary mb-1");
+    startButton.setAttribute("id","startButton");
+    quizEl.appendChild(startButton);
+
   
+
+    // add Event Listenser for Start Button
+
+}
+
+// Function to degenerate question
+function renderQuestion(){
+
+    //  Running down through each question in questions array
+   // for (let i =  0; i < questions.length; i++){
+
+        // Display Question        
+        questionEl.textContent = questions[0].title;
+        questionEl.setAttribute("class", "m-2")
+        quizEl.appendChild(questionEl);
+
+
+        console.log(questions[0].title);
+        console.log(questions[0].choices[0])
+        console.log(brEl);
+
+        // Display First Answer
+
+        answer1.textContent = "1. " + questions[0].choices[0];
+        answer1.setAttribute("type", "button");
+        answer1.setAttribute("class","btn btn-primary mb-1");
+        quizEl.appendChild(answer1);
+        quizEl.appendChild(brEl.cloneNode());
+
+
+        
+        // Display Second Answer
+        answer2.textContent = "2. " + questions[0].choices[1];
+        answer2.setAttribute("type", "button");
+        answer2.setAttribute("class","btn btn-primary mb-1");
+        quizEl.appendChild(answer2);
+        quizEl.appendChild(brEl.cloneNode());
+
+        // Display third Answer
+       
+        answer3.textContent = "3. " +  questions[0].choices[2];
+        answer3.setAttribute("type", "button");
+        answer3.setAttribute("class","btn btn-primary mb-1");
+        quizEl.appendChild(answer3);
+        quizEl.appendChild(brEl.cloneNode());
+
+        // Display Forth Answer
+        answer4.textContent = "4. " +  questions[0].choices[3];
+        answer4.setAttribute("type", "button");
+        answer4.setAttribute("class","btn btn-primary mb-1");
+        quizEl.appendChild(answer4);
+        quizEl.appendChild(brEl.cloneNode());
+
+
+    //}
+
+
+}
+
+// Function to view all scores
+function viewScores(){
+
+}
+
+// function for timer
+function timer(){
+
+}
+
+// Function to record the score from the game to all scores
+function recordScore(){
+
+}
+
+// Function to clear all elements within the quiz area for reuse
+function clearScreen(){
+    while (quizEl.firstChild) {
+        quizEl.removeChild(quizEl.firstChild);
+    }
+}
+
+
+
+
+
+
+
+
+// ************* REFERENCES *************
+
+// Set the body to a variable
+// var body = document.body;
+
+// Create all necessary elements
+// var h1El = document.createElement("h1");
+// var h2El = document.createElement("h2");
+// var infoEl = document.createElement("div");
+// var kittenEl = document.createElement("div");
+// var nameEl = document.createElement("div");
+// var favoriteEl = document.createElement("div");
+// var listEl = document.createElement("ol");
+// var li1 = document.createElement("li");
+// var li2 = document.createElement("li");
+// var li3 = document.createElement("li");
+// var li4 = document.createElement("li");
+
+// Store our li elements in a variable
+// var listItems = document.getElementsByTagName("li");
+
+// Set the text content of relevant elements
+// h1El.textContent = "Welcome to my page";
+// h2El.textContent = "This HTML document was created using JavaScript and Chrome Dev Tools";
+// kittenEl.textContent = "This is my kitten";
+// nameEl.textContent = "his name is Jax";
+// favoriteEl.textContent = "My favorite foods are:";
+// li1.textContent = "Chicken Fingers";
+// li2.textContent = "Pizza";
+// li3.textContent = "Burgers";
+// li4.textContent = "Sushi";
+
+// Append all of our elements
+// body.appendChild(h1El);
+// body.appendChild(h2El);
+// body.appendChild(infoEl);
+// infoEl.appendChild(imgEl);
+// infoEl.appendChild(kittenEl);
+// infoEl.appendChild(nameEl);
+// body.appendChild(favoriteEl);
+// favoriteEl.appendChild(listEl);
+// listEl.appendChild(li1);
+// listEl.appendChild(li2);
+// listEl.appendChild(li3);
+// listEl.appendChild(li4);
+
+// Style all of our elements
+// h1El.setAttribute("style", "margin:auto; width:50%; text-align:center;");
+// h2El.setAttribute("style", "margin:auto; width:100%; text-align:center;");
+// infoEl.setAttribute("style", "margin:auto; width:50%; text-align:center;");
+// imgEl.setAttribute("src", "http://placekitten.com/200/300");
+// imgEl.setAttribute("height", 200);
+// imgEl.setAttribute("width", 200);
+// nameEl.setAttribute("style", "font-size:25px; text-align:center;");
+// kittenEl.setAttribute("style", "font-size:25px; text-align:center;");
+// favoriteEl.setAttribute("style", "font-size:20px;");
+// listEl.setAttribute("style", "background:#333333; padding:20px;");
+// listItems[0].setAttribute("style", " color:white; background: #666666; padding: 5px; margin-left: 35px;");
+// listItems[1].setAttribute("style", " color:white; background: #777777; padding: 5px; margin-left: 35px;");
+// listItems[2].setAttribute("style", " color:white; background: #888888; padding: 5px; margin-left: 35px;");
+// listItems[3].setAttribute("style", " color:white; background: #999999; padding: 5px; margin-left: 35px;");
