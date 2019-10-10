@@ -18,10 +18,39 @@ var nameEl = document.createElement("div");
 var favoriteEl = document.createElement("div");
 var listEl = document.createElement("ol");
 
+//************************ CODE ************************
+
+var questionNo = 0;
+start();
+
+//************************ FUNCTIONS & EVENT LISTENSERS ************************
 
 
-renderQuestion();
+quizEl.addEventListener("click", function(event) {
+    var element = event.target;
 
+    // If that element is a button...
+    if (element.matches("button") === true) {
+      
+        // Check what type of button it is. Start button, Answer Button, etc.
+        var buttonType = element.getAttribute("button-type");
+
+        if (buttonType == "start"){ // If button is the start button
+            clearScreen(); // Clears the screen
+            quizEl.setAttribute("class","col-md-6 bg-light pt-2") // removed center alignment
+            renderQuestion(questionNo); // Renders first question
+        }
+
+        // If the button is an answer from a question
+        if (buttonType == "answer1" || buttonType == "answer2" || buttonType == "answer3" || buttonType == "answer4"){
+            clearScreen();
+            questionNo++; //goes to next question
+            renderQuestion(questionNo); // renders question
+        }
+
+  
+    }
+  });
 
 
 // Function for Start Screen
@@ -47,6 +76,7 @@ function start(){
     startButton.setAttribute("type", "button");
     startButton.setAttribute("class","btn btn-primary mb-1");
     startButton.setAttribute("id","startButton");
+    startButton.setAttribute("button-type", "start")
     quizEl.appendChild(startButton);
 
   
@@ -56,13 +86,13 @@ function start(){
 }
 
 // Function to degenerate question
-function renderQuestion(){
+function renderQuestion(num){
 
     //  Running down through each question in questions array
    // for (let i =  0; i < questions.length; i++){
 
         // Display Question        
-        questionEl.textContent = questions[0].title;
+        questionEl.textContent = questions[num].title;
         questionEl.setAttribute("class", "m-2")
         quizEl.appendChild(questionEl);
 
@@ -73,38 +103,53 @@ function renderQuestion(){
 
         // Display First Answer
 
-        answer1.textContent = "1. " + questions[0].choices[0];
+        answer1.textContent = "1. " + questions[num].choices[0];
         answer1.setAttribute("type", "button");
         answer1.setAttribute("class","btn btn-primary mb-1");
+        answer1.setAttribute("button-type", "answer1");
         quizEl.appendChild(answer1);
         quizEl.appendChild(brEl.cloneNode());
 
 
         
         // Display Second Answer
-        answer2.textContent = "2. " + questions[0].choices[1];
+        answer2.textContent = "2. " + questions[num].choices[1];
         answer2.setAttribute("type", "button");
         answer2.setAttribute("class","btn btn-primary mb-1");
+        answer2.setAttribute("button-type", "answer2");
         quizEl.appendChild(answer2);
         quizEl.appendChild(brEl.cloneNode());
 
         // Display third Answer
-       
-        answer3.textContent = "3. " +  questions[0].choices[2];
-        answer3.setAttribute("type", "button");
-        answer3.setAttribute("class","btn btn-primary mb-1");
-        quizEl.appendChild(answer3);
-        quizEl.appendChild(brEl.cloneNode());
+        if (questions[num].choices[2] != undefined){
+            answer3.textContent = "3. " +  questions[num].choices[2];
+            answer3.setAttribute("type", "button");
+            answer3.setAttribute("class","btn btn-primary mb-1");
+            answer3.setAttribute("button-type", "answer3");
+            quizEl.appendChild(answer3);
+            quizEl.appendChild(brEl.cloneNode());
+        };
+
 
         // Display Forth Answer
-        answer4.textContent = "4. " +  questions[0].choices[3];
-        answer4.setAttribute("type", "button");
-        answer4.setAttribute("class","btn btn-primary mb-1");
-        quizEl.appendChild(answer4);
-        quizEl.appendChild(brEl.cloneNode());
+        if (questions[num].choices[3] != undefined){
+            answer4.textContent = "4. " +  questions[num].choices[3];
+            answer4.setAttribute("type", "button");
+            answer4.setAttribute("class","btn btn-primary mb-1");
+            answer4.setAttribute("button-type", "answer4");
+            quizEl.appendChild(answer4);
+            quizEl.appendChild(brEl.cloneNode());
+        };
+
 
 
     //}
+
+
+}
+
+// View final Score
+function viewFinalScore(){
 
 
 }
