@@ -2,8 +2,19 @@
 var h2El = document.createElement("h2");
 var descriptionEl = document.createElement("p");
 var startButton = document.createElement("button");
+
+// Record Score Elements
 var initialsInput = document.createElement("input");
 var initialsSubmit = document.createElement("button");
+
+// High Score Elements
+var scoreList = document.createElement("ul");
+scoreList.setAttribute("class", "list-group mb-2");
+var goBackbtn = document.createElement("button");;
+var cleareScoresbtn = document.createElement("button");
+
+// High Score
+var scores = [{initials: "KR", score: "200"}, {initials: "RR", score: "500"}];
 
 // Question Elements
 var questionEl = document.createElement("h5");
@@ -30,7 +41,8 @@ var col3 = document.createElement("div");
 
 //************************ CODE ************************
 
-viewFinalScore();
+storedScores()
+renderHighScores();
 
 // var questionNo = 0; // Questions Variable
 // var score = 0;
@@ -101,67 +113,55 @@ function start(){
 // Function to degenerate question - COMPLETE
 function renderQuestion(num){
 
-    //  Running down through each question in questions array
-   // for (let i =  0; i < questions.length; i++){
-
-        // Display Question        
-        questionEl.textContent = questions[num].title;
-        questionEl.setAttribute("class", "m-2")
-        quizEl.appendChild(questionEl);
+    // Display Question        
+    questionEl.textContent = questions[num].title;
+    questionEl.setAttribute("class", "m-2")
+    quizEl.appendChild(questionEl);
 
 
-        console.log(questions[0].title);
-        console.log(questions[0].choices[0])
-        console.log(brEl);
+    console.log(questions[0].title);
+    console.log(questions[0].choices[0])
+    console.log(brEl);
 
-        // Display First Answer
+    // Display First Answer
+    answer1.textContent = "1. " + questions[num].choices[0];
+    answer1.setAttribute("type", "button");
+    answer1.setAttribute("class","btn btn-primary mb-1");
+    answer1.setAttribute("data-btnType", "answer1");
+    quizEl.appendChild(answer1);
+    quizEl.appendChild(brEl.cloneNode());
+    
+    // Display Second Answer
+    answer2.textContent = "2. " + questions[num].choices[1];
+    answer2.setAttribute("type", "button");
+    answer2.setAttribute("class","btn btn-primary mb-1");
+    answer2.setAttribute("data-btnType", "answer2");
+    quizEl.appendChild(answer2);
+    quizEl.appendChild(brEl.cloneNode());
 
-        answer1.textContent = "1. " + questions[num].choices[0];
-        answer1.setAttribute("type", "button");
-        answer1.setAttribute("class","btn btn-primary mb-1");
-        answer1.setAttribute("data-btnType", "answer1");
-        quizEl.appendChild(answer1);
+    // Display third Answer
+    if (questions[num].choices[2] != undefined){ // If third choice does not exist
+        answer3.textContent = "3. " +  questions[num].choices[2];
+        answer3.setAttribute("type", "button");
+        answer3.setAttribute("class","btn btn-primary mb-1");
+        answer3.setAttribute("data-btnType", "answer3");
+        quizEl.appendChild(answer3);
         quizEl.appendChild(brEl.cloneNode());
+    };
 
-
-        
-        // Display Second Answer
-        answer2.textContent = "2. " + questions[num].choices[1];
-        answer2.setAttribute("type", "button");
-        answer2.setAttribute("class","btn btn-primary mb-1");
-        answer2.setAttribute("data-btnType", "answer2");
-        quizEl.appendChild(answer2);
+    // Display Forth Answer
+    if (questions[num].choices[3] != undefined){ // If forth choice does not exist
+        answer4.textContent = "4. " +  questions[num].choices[3];
+        answer4.setAttribute("type", "button");
+        answer4.setAttribute("class","btn btn-primary mb-1");
+        answer4.setAttribute("data-btnType", "answer4");
+        quizEl.appendChild(answer4);
         quizEl.appendChild(brEl.cloneNode());
-
-        // Display third Answer
-        if (questions[num].choices[2] != undefined){
-            answer3.textContent = "3. " +  questions[num].choices[2];
-            answer3.setAttribute("type", "button");
-            answer3.setAttribute("class","btn btn-primary mb-1");
-            answer3.setAttribute("data-btnType", "answer3");
-            quizEl.appendChild(answer3);
-            quizEl.appendChild(brEl.cloneNode());
-        };
-
-
-        // Display Forth Answer
-        if (questions[num].choices[3] != undefined){
-            answer4.textContent = "4. " +  questions[num].choices[3];
-            answer4.setAttribute("type", "button");
-            answer4.setAttribute("class","btn btn-primary mb-1");
-            answer4.setAttribute("data-btnType", "answer4");
-            quizEl.appendChild(answer4);
-            quizEl.appendChild(brEl.cloneNode());
-        };
-
-
-
-    //}
-
+    };
 
 }
 
-// View final Score and input initials after end of quiz
+// View final Score and input initials after end of quiz - COMPLETE
 function viewFinalScore(){
 
     // Clears screen of any elements
@@ -176,7 +176,7 @@ function viewFinalScore(){
     quizEl.appendChild(h2El);
 
     
-    descriptionEl.textContent = "Your Score: ";
+    descriptionEl.textContent = "Your Score: "; // SCORE GOES HERE
     quizEl.appendChild(descriptionEl);
     initialsInput.setAttribute("class", "form-control mb-2");
     initialsInput.setAttribute("placeholder", "Enter Initials");
@@ -191,7 +191,6 @@ function viewFinalScore(){
     row1.appendChild(col3);
     col2.appendChild(initialsInput);
  
-    
     // Submit Initials button
     initialsSubmit.innerHTML = "Submit";
     initialsSubmit.setAttribute("type", "button");
@@ -201,10 +200,65 @@ function viewFinalScore(){
     quizEl.appendChild(initialsSubmit);
 }
 
-// Function to view all scores
-function viewScores(){
-
+// Places Scores in Local Storage
+function storedScores() {
+    // Stringify and set "todos" key in localStorage to todos array
+    localStorage.setItem("score", JSON.stringify(scores));
 }
+
+// Function to view all scores
+function renderHighScores(){
+
+    // Clears the quiz area.
+    clearScreen();
+    
+    // Title for High Scores Screen
+    h2El.textContent = "High Scores";
+    h2El.setAttribute("class","text-center mb-3");
+    quizEl.appendChild(h2El);
+
+    // Append the List
+    quizEl.appendChild(scoreList);
+
+    // Get stored scores from localStorage
+    // Parsing the JSON string to an object
+    var storedScores = JSON.parse(localStorage.getItem("score"));
+
+    // Render a new li for each score
+    for (var i = 0; i < storedScores.length; i++) {
+        let score = storedScores[i];
+
+        // Creates a list item with score with boostrap attributes
+        var li = document.createElement("li");
+        li.textContent = score.initials + " - " + score.score;
+        li.setAttribute("class", "list-group-item");
+
+        // Appends the list items
+        scoreList.appendChild(li);
+    }
+
+    goBackbtn.innerHTML = "Go Back";
+    goBackbtn.setAttribute("type", "button");
+    goBackbtn.setAttribute("class","btn btn-primary m-2");
+    goBackbtn.setAttribute("id","goBackbtn");
+    goBackbtn.setAttribute("data-btnType", "start")
+    //quizEl.appendChild(goBackbtn);
+
+    cleareScoresbtn.innerHTML = "Clear High Scores";
+    cleareScoresbtn.setAttribute("type", "button");
+    cleareScoresbtn.setAttribute("class","btn btn-primary m-2");
+    cleareScoresbtn.setAttribute("id","cleareScoresbtn");
+    cleareScoresbtn.setAttribute("data-btnType", "clearScores")
+    //quizEl.appendChild(cleareScoresbtn);
+
+    // Using Bootstrap layout for repsonsiveness
+    quizEl.appendChild(row1);
+    row1.appendChild(col1);
+    col1.setAttribute("class", "col-sm-12")
+    col1.appendChild(goBackbtn);
+    col1.appendChild(cleareScoresbtn);
+}
+
 
 // function for timer
 function timer(){
@@ -216,7 +270,7 @@ function recordScore(){
 
 }
 
-// Function to clear all elements within the quiz area for reuse
+// Function to clear all elements within the quiz area for reuse - COMPLETE
 function clearScreen(){
     while (quizEl.firstChild) {
         quizEl.removeChild(quizEl.firstChild);
