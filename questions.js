@@ -10,7 +10,7 @@ var questions = [
         answer: "The <body> section"
     },
     {
-        title: "WThe external JavaScript file must contain the <script> tag.",
+        title: "The external JavaScript file must contain the <script> tag.",
         choices: ["True","False"],
         answer: "False"
     },
@@ -82,12 +82,12 @@ var questions = [
     {
         title: "Choose the correct HTML element to define important text",
         choices: ["<b>","<i>","<important>","<strong>"],
-        answer: ""
+        answer: "<strong>"
     },
     {
         title: "Choose the correct HTML element to define emphasized text",
         choices: ["<i>","<em>","<italic>"],
-        answer: "<i>"
+        answer: "<em>"
     },
     {
         title: "Which character is used to indicate an end tag?",
@@ -101,7 +101,7 @@ var questions = [
     },
     {
         title: "What is the correct HTML for inserting an image?",
-        choices: ["<img href=\"image.gif\" alt=\"MyImage\">"," <image src=\"image.gif\" alt=\"MyImage\">","<img alt=\"MyImage\">image.gif</img>"," <img src=\"image.gif\" alt=\"MyImage\">"],
+        choices: ["<img href=\"image.gif\" alt=\"MyImage\">","<image src=\"image.gif\" alt=\"MyImage\">","<img alt=\"MyImage\">image.gif</img>","<img src=\"image.gif\" alt=\"MyImage\">"],
         answer: "<image src=\"image.gif\" alt=\"MyImage\">"
     },
     {
