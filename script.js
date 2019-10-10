@@ -2,26 +2,39 @@
 var h2El = document.createElement("h2");
 var descriptionEl = document.createElement("p");
 var startButton = document.createElement("button");
-    // Question Elements
-    var questionEl = document.createElement("h5");
-    var answer1 = document.createElement("button");
-    var answer2 = document.createElement("button");
-    var answer3 = document.createElement("button");
-    var answer4 = document.createElement("button");
+var initialsInput = document.createElement("input");
+var initialsSubmit = document.createElement("button");
+
+// Question Elements
+var questionEl = document.createElement("h5");
+var answer1 = document.createElement("button");
+var answer2 = document.createElement("button");
+var answer3 = document.createElement("button");
+var answer4 = document.createElement("button");
 
 
 //Main Area Elemenent
 var quizEl = document.getElementById("quizArea");
 var brEl = document.createElement("br");
 
-var nameEl = document.createElement("div");
-var favoriteEl = document.createElement("div");
-var listEl = document.createElement("ol");
+// Boostrap elements
+var row1 = document.createElement("div");
+row1.setAttribute("class", "row");
+var row2 = document.createElement("div");
+row2.setAttribute("class", "row");
+var row3 = document.createElement("div");
+row3.setAttribute("class", "row");
+var col1 = document.createElement("div");
+var col2 = document.createElement("div");
+var col3 = document.createElement("div");
 
 //************************ CODE ************************
 
-var questionNo = 0;
-start();
+viewFinalScore();
+
+// var questionNo = 0; // Questions Variable
+// var score = 0;
+// start();
 
 //************************ FUNCTIONS & EVENT LISTENSERS ************************
 
@@ -33,7 +46,7 @@ quizEl.addEventListener("click", function(event) {
     if (element.matches("button") === true) {
       
         // Check what type of button it is. Start button, Answer Button, etc.
-        var buttonType = element.getAttribute("button-type");
+        var buttonType = element.getAttribute("data-btnType");
 
         if (buttonType == "start"){ // If button is the start button
             clearScreen(); // Clears the screen
@@ -53,7 +66,7 @@ quizEl.addEventListener("click", function(event) {
   });
 
 
-// Function for Start Screen
+// Function for Start Screen - COMPLETE
 function start(){
 
     // Clears screen of any elements
@@ -76,7 +89,7 @@ function start(){
     startButton.setAttribute("type", "button");
     startButton.setAttribute("class","btn btn-primary mb-1");
     startButton.setAttribute("id","startButton");
-    startButton.setAttribute("button-type", "start")
+    startButton.setAttribute("data-btnType", "start")
     quizEl.appendChild(startButton);
 
   
@@ -85,7 +98,7 @@ function start(){
 
 }
 
-// Function to degenerate question
+// Function to degenerate question - COMPLETE
 function renderQuestion(num){
 
     //  Running down through each question in questions array
@@ -106,7 +119,7 @@ function renderQuestion(num){
         answer1.textContent = "1. " + questions[num].choices[0];
         answer1.setAttribute("type", "button");
         answer1.setAttribute("class","btn btn-primary mb-1");
-        answer1.setAttribute("button-type", "answer1");
+        answer1.setAttribute("data-btnType", "answer1");
         quizEl.appendChild(answer1);
         quizEl.appendChild(brEl.cloneNode());
 
@@ -116,7 +129,7 @@ function renderQuestion(num){
         answer2.textContent = "2. " + questions[num].choices[1];
         answer2.setAttribute("type", "button");
         answer2.setAttribute("class","btn btn-primary mb-1");
-        answer2.setAttribute("button-type", "answer2");
+        answer2.setAttribute("data-btnType", "answer2");
         quizEl.appendChild(answer2);
         quizEl.appendChild(brEl.cloneNode());
 
@@ -125,7 +138,7 @@ function renderQuestion(num){
             answer3.textContent = "3. " +  questions[num].choices[2];
             answer3.setAttribute("type", "button");
             answer3.setAttribute("class","btn btn-primary mb-1");
-            answer3.setAttribute("button-type", "answer3");
+            answer3.setAttribute("data-btnType", "answer3");
             quizEl.appendChild(answer3);
             quizEl.appendChild(brEl.cloneNode());
         };
@@ -136,7 +149,7 @@ function renderQuestion(num){
             answer4.textContent = "4. " +  questions[num].choices[3];
             answer4.setAttribute("type", "button");
             answer4.setAttribute("class","btn btn-primary mb-1");
-            answer4.setAttribute("button-type", "answer4");
+            answer4.setAttribute("data-btnType", "answer4");
             quizEl.appendChild(answer4);
             quizEl.appendChild(brEl.cloneNode());
         };
@@ -148,10 +161,44 @@ function renderQuestion(num){
 
 }
 
-// View final Score
+// View final Score and input initials after end of quiz
 function viewFinalScore(){
 
+    // Clears screen of any elements
+    clearScreen();
 
+    // Setting all elements wthin Quiz Area
+    quizEl.setAttribute("class","col-md-6 bg-light text-center pt-2")
+
+    // Title
+    h2El.textContent = "FINISHED!";
+    h2El.setAttribute("class","text-center");
+    quizEl.appendChild(h2El);
+
+    
+    descriptionEl.textContent = "Your Score: ";
+    quizEl.appendChild(descriptionEl);
+    initialsInput.setAttribute("class", "form-control mb-2");
+    initialsInput.setAttribute("placeholder", "Enter Initials");
+
+    // Bootstrap layout for Initals form to be responsive
+    quizEl.appendChild(row1);
+    col1.setAttribute("class", "col-sm-3")
+    col2.setAttribute("class", "col-sm-6")
+    col3.setAttribute("class", "col-sm-3")
+    row1.appendChild(col1);
+    row1.appendChild(col2);
+    row1.appendChild(col3);
+    col2.appendChild(initialsInput);
+ 
+    
+    // Submit Initials button
+    initialsSubmit.innerHTML = "Submit";
+    initialsSubmit.setAttribute("type", "button");
+    initialsSubmit.setAttribute("class","btn btn-primary my-1");
+    initialsSubmit.setAttribute("id","initialsSubmit");
+    initialsSubmit.setAttribute("data-btnType", "initialsSubmit");
+    quizEl.appendChild(initialsSubmit);
 }
 
 // Function to view all scores
