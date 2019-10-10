@@ -42,14 +42,14 @@ var col1 = document.createElement("div");
 var col2 = document.createElement("div");
 var col3 = document.createElement("div");
 
+// Variable Declations
+var questionIndex = 0;
+var questionNo = 1;
+var score = 0;
+
 //************************ CODE ************************
 
 start();
-
-var questionIndex = 0; // Questions Variable
-var questionNo = 1;
-var score = 0;
-//start();
 
 //************************ FUNCTIONS & EVENT LISTENSERS ************************
 
