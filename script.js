@@ -30,6 +30,8 @@ var answer4 = document.createElement("button");
 var quizEl = document.getElementById("quizArea");
 var brEl = document.createElement("br");
 var timeEl = document.getElementById("timer");
+var viewHighScoresEl = document.getElementById("viewHighScores");
+var navEl = document.getElementById("navbar");
 
 // Boostrap elements
 var row1 = document.createElement("div");
@@ -65,6 +67,17 @@ start();
 
 //************************ FUNCTIONS & EVENT LISTENSERS ************************
 
+navEl.addEventListener("click", function(event){
+    var element = event.target;
+
+    var elementType = element.getAttribute("data-btnType");
+
+    if (elementType == "viewHighScores"){
+        clearScreen(); // Clears the screen
+        renderHighScores(); // renders all the scores from local storage
+    }
+})
+
 
 quizEl.addEventListener("click", function(event) {
     var element = event.target;
@@ -81,7 +94,7 @@ quizEl.addEventListener("click", function(event) {
             console.log("Start button Pressed");
             console.log("Current Scores Array: " + scores )
             clearScreen(); // Clears the screen
-            quizEl.setAttribute("class","col-md-6 bg-light pt-2") // removed center alignment
+            quizEl.setAttribute("class","col-md-6 pt-2") // removed center alignment
             renderQuestion(questionIndex); // Renders first question
         }
 
@@ -141,7 +154,7 @@ quizEl.addEventListener("click", function(event) {
             questionIndex = 0;
             questionNo = 1;
             score = 0;
-            secondsLeft = 3;
+            secondsLeft = 75;
             timeEl.textContent = "Time: " + secondsLeft;
 
             //start the first page.
@@ -174,7 +187,7 @@ quizEl.addEventListener("click", function(event) {
 function start(){
 
     // Setting all elements wthin Quiz Area
-    quizEl.setAttribute("class","col-md-6 bg-light text-center pt-2")
+    quizEl.setAttribute("class","col-md-6 text-center pt-2")
 
     // Title
     h2El.textContent = "Code Quiz Challenge";
@@ -256,7 +269,7 @@ function viewFinalScore(){
     clearScreen();
 
     // Setting all elements wthin Quiz Area
-    quizEl.setAttribute("class","col-md-6 bg-light text-center pt-2")
+    quizEl.setAttribute("class","col-md-6 text-center pt-2")
 
     // Title
     h2El.textContent = "FINISHED!";
@@ -360,6 +373,8 @@ function startTimer(){
     
         if(secondsLeft < 1) {
           clearInterval(timerInterval);
+          secondsLeft = 0;
+          timeEl.textContent = "Time: " + secondsLeft;
           viewFinalScore();
         }
     
