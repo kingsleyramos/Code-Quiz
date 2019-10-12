@@ -119,9 +119,13 @@ quizEl.addEventListener("click", function(event) {
         if (buttonType == "goBack"){
             console.log("Back Button Pressed");
             clearScreen();
+
+            // Resets all gloval variables back to start
             questionIndex = 0;
             questionNo = 1;
             score = 0;
+
+            //start the first page.
             start();
         }
 
@@ -129,16 +133,16 @@ quizEl.addEventListener("click", function(event) {
         if (buttonType == "initialsSubmit"){
             console.log("Submit Button Press");
             console.log("recordScore");
-            recordScore();
+            recordScore(); // Records the score
             console.log("Clear Screen");
-            clearScreen();
+            clearScreen(); // Clears the screen
             console.log("Render Scores");
-            renderHighScores();
+            renderHighScores(); // renders all the scores from local storage
         }
 
         if (buttonType == "clearScores"){
-            localStorage.clear();
-            renderHighScores();
+            localStorage.clear(); // clears the local storage
+            renderHighScores(); // rerenders the scores
         }
 
         console.log(quizScore);
@@ -332,7 +336,7 @@ function renderHighScores(){
 }
 
 // function for timer
-function timer(){
+function startTimer(){
 
 }
 
@@ -340,6 +344,8 @@ function timer(){
 function recordScore(){
 
     clearScreen();
+    
+    // sets all references to local variables to use
     var initial = initialsInput.value;
     var uscore = quizScore;
     var pushScore = {initials: initial, score: uscore};
@@ -349,24 +355,55 @@ function recordScore(){
     console.log("uscore: " + uscore);
     console.log("pushScore: " + pushScore);
     console.log("Scores Gobal Varible: " + scores)
+
+    // pushes the score object into the scores array
     scores.push(pushScore);
     console.log("Local Scores array after push: " + scores);
+
+    // Stores the scores array in local storage
     localStorage.setItem("score", JSON.stringify(scores));
+
+    // Resets values in initialsInput and quizscore back to 0
+    initialsInput.value = "";
+    quizScore = 0;
 
 }
 
 // Function to clear all elements within the quiz area for reuse - COMPLETE
 function clearScreen(){
+
+    //clears all child nodes in quiz area
     while (quizEl.firstChild) {
         quizEl.removeChild(quizEl.firstChild);
     }
+
+    //clears all child nodes in row1 element
     while(row1.firstChild){
         row1.removeChild(row1.firstChild);
     }
+
+    //clears all child nodes in row2 element
     while(row2.firstChild){
         row2.removeChild(row2.firstChild);
     }
+
+    //clears all child nodes in  scores list element
     while(scoreList.firstChild){
         scoreList.removeChild(scoreList.firstChild);
+    }
+
+    //clears all child nodes in col1 element
+    while(col1.firstChild){
+        col1.removeChild(col1.firstChild);
+    }
+
+    //clears all child nodes in col2 element
+    while(col2.firstChild){
+        col2.removeChild(col2.firstChild);
+    }
+
+    //clears all child nodes in col3 element
+    while(col3.firstChild){
+        col3.removeChild(col3.firstChild);
     }
 }
