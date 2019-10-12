@@ -14,7 +14,9 @@ var goBackbtn = document.createElement("button");;
 var cleareScoresbtn = document.createElement("button");
 
 // High Score
-var scores = [{initials: "KR", score: "200"}, {initials: "RR", score: "500"}];
+var scores = [];
+
+scores = JSON.parse(localStorage.getItem("score"));
 
 // Quiz Score
 var quizScore = 0;
@@ -49,6 +51,13 @@ var score = 0;
 
 //************************ CODE ************************
 
+//viewFinalScore();
+
+if (scores == null){
+    scores = [];
+    localStorage.setItem("score", JSON.stringify(scores));
+}
+
 start();
 
 //************************ FUNCTIONS & EVENT LISTENSERS ************************
@@ -64,6 +73,9 @@ quizEl.addEventListener("click", function(event) {
         var buttonType = element.getAttribute("data-btnType");
 
         if (buttonType == "start"){ // If button is the start button
+
+            console.log("Start button Pressed");
+            console.log("Current Scores Array: " + scores )
             clearScreen(); // Clears the screen
             quizEl.setAttribute("class","col-md-6 bg-light pt-2") // removed center alignment
             renderQuestion(questionIndex); // Renders first question
@@ -96,20 +108,42 @@ quizEl.addEventListener("click", function(event) {
                 questionNo++;
                 renderQuestion(questionIndex); // renders question
             }
-            else{
+            else{ // Will view final score once it reaches end of the questions array
                 console.log("viewFinalScore");
                 viewFinalScore();
+                console.log("View final scores");
             }
         }
 
+        // If button is the Go Back button
         if (buttonType == "goBack"){
+            console.log("Back Button Pressed");
             clearScreen();
+            questionIndex = 0;
+            questionNo = 1;
+            score = 0;
             start();
+        }
+
+        // If button is the submit button on
+        if (buttonType == "initialsSubmit"){
+            console.log("Submit Button Press");
+            console.log("recordScore");
+            recordScore();
+            console.log("Clear Screen");
+            clearScreen();
+            console.log("Render Scores");
+            renderHighScores();
+        }
+
+        if (buttonType == "clearScores"){
+            localStorage.clear();
+            renderHighScores();
         }
 
         console.log(quizScore);
     }
-  });
+});
 
 
 // Function for Start Screen - COMPLETE
@@ -118,6 +152,7 @@ function start(){
     // Clears screen of any elements
     clearScreen();
 
+    
     // Setting all elements wthin Quiz Area
     quizEl.setAttribute("class","col-md-6 bg-light text-center pt-2")
 
@@ -241,7 +276,7 @@ function storedScores() {
 
 // Function to view all scores
 function renderHighScores(){
-
+    console.log("Scores array before render: " +scores);
     // Clears the quiz area.
     clearScreen();
     
@@ -255,12 +290,13 @@ function renderHighScores(){
 
     // Get stored scores from localStorage
     // Parsing the JSON string to an object
-    var storedScores = JSON.parse(localStorage.getItem("score"));
 
     // Render a new li for each score
-    for (var i = 0; i < storedScores.length; i++) {
-        let score = storedScores[i];
-
+    for (var i = 0; i < scores.length; i++) {
+        console.log("li: " + i)
+        let score = scores[i];
+        console.log("score :" + score)
+        console.log("scores[i]: " + scores[i])
         // Creates a list item with score with boostrap attributes
         var li = document.createElement("li");
         li.textContent = score.initials + " - " + score.score;
@@ -268,6 +304,7 @@ function renderHighScores(){
 
         // Appends the list items
         scoreList.appendChild(li);
+        console.log("li: " + li);
     }
 
     goBackbtn.innerHTML = "Go Back";
@@ -285,13 +322,14 @@ function renderHighScores(){
     //quizEl.appendChild(cleareScoresbtn);
 
     // Using Bootstrap layout for repsonsiveness
-    quizEl.appendChild(row1);
-    row1.appendChild(col1);
+    quizEl.appendChild(row2);
+    row2.appendChild(col1);
     col1.setAttribute("class", "col-sm-12")
     col1.appendChild(goBackbtn);
     col1.appendChild(cleareScoresbtn);
+    console.log("Scores array after render: " +scores);
+    localStorage.setItem("score", JSON.stringify(scores));
 }
-
 
 // function for timer
 function timer(){
@@ -301,6 +339,20 @@ function timer(){
 // Function to record the score from the game to all scores
 function recordScore(){
 
+    clearScreen();
+    var initial = initialsInput.value;
+    var uscore = quizScore;
+    var pushScore = {initials: initial, score: uscore};
+
+    console.log(initialsInput);
+    console.log("Initial: " + initial);
+    console.log("uscore: " + uscore);
+    console.log("pushScore: " + pushScore);
+    console.log("Scores Gobal Varible: " + scores)
+    scores.push(pushScore);
+    console.log("Local Scores array after push: " + scores);
+    localStorage.setItem("score", JSON.stringify(scores));
+
 }
 
 // Function to clear all elements within the quiz area for reuse - COMPLETE
@@ -308,73 +360,13 @@ function clearScreen(){
     while (quizEl.firstChild) {
         quizEl.removeChild(quizEl.firstChild);
     }
+    while(row1.firstChild){
+        row1.removeChild(row1.firstChild);
+    }
+    while(row2.firstChild){
+        row2.removeChild(row2.firstChild);
+    }
+    while(scoreList.firstChild){
+        scoreList.removeChild(scoreList.firstChild);
+    }
 }
-
-
-
-
-
-
-
-
-// ************* REFERENCES *************
-
-// Set the body to a variable
-// var body = document.body;
-
-// Create all necessary elements
-// var h1El = document.createElement("h1");
-// var h2El = document.createElement("h2");
-// var infoEl = document.createElement("div");
-// var kittenEl = document.createElement("div");
-// var nameEl = document.createElement("div");
-// var favoriteEl = document.createElement("div");
-// var listEl = document.createElement("ol");
-// var li1 = document.createElement("li");
-// var li2 = document.createElement("li");
-// var li3 = document.createElement("li");
-// var li4 = document.createElement("li");
-
-// Store our li elements in a variable
-// var listItems = document.getElementsByTagName("li");
-
-// Set the text content of relevant elements
-// h1El.textContent = "Welcome to my page";
-// h2El.textContent = "This HTML document was created using JavaScript and Chrome Dev Tools";
-// kittenEl.textContent = "This is my kitten";
-// nameEl.textContent = "his name is Jax";
-// favoriteEl.textContent = "My favorite foods are:";
-// li1.textContent = "Chicken Fingers";
-// li2.textContent = "Pizza";
-// li3.textContent = "Burgers";
-// li4.textContent = "Sushi";
-
-// Append all of our elements
-// body.appendChild(h1El);
-// body.appendChild(h2El);
-// body.appendChild(infoEl);
-// infoEl.appendChild(imgEl);
-// infoEl.appendChild(kittenEl);
-// infoEl.appendChild(nameEl);
-// body.appendChild(favoriteEl);
-// favoriteEl.appendChild(listEl);
-// listEl.appendChild(li1);
-// listEl.appendChild(li2);
-// listEl.appendChild(li3);
-// listEl.appendChild(li4);
-
-// Style all of our elements
-// h1El.setAttribute("style", "margin:auto; width:50%; text-align:center;");
-// h2El.setAttribute("style", "margin:auto; width:100%; text-align:center;");
-// infoEl.setAttribute("style", "margin:auto; width:50%; text-align:center;");
-// imgEl.setAttribute("src", "http://placekitten.com/200/300");
-// imgEl.setAttribute("height", 200);
-// imgEl.setAttribute("width", 200);
-// nameEl.setAttribute("style", "font-size:25px; text-align:center;");
-// kittenEl.setAttribute("style", "font-size:25px; text-align:center;");
-// favoriteEl.setAttribute("style", "font-size:20px;");
-// listEl.setAttribute("style", "background:#333333; padding:20px;");
-// listItems[0].setAttribute("style", " color:white; background: #666666; padding: 5px; margin-left: 35px;");
-// listItems[1].setAttribute("style", " color:white; background: #777777; padding: 5px; margin-left: 35px;");
-// listItems[2].setAttribute("style", " color:white; background: #888888; padding: 5px; margin-left: 35px;");
-// listItems[3].setAttribute("style", " color:white; background: #999999; padding: 5px; margin-left: 35px;");
