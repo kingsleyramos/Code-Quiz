@@ -13,8 +13,8 @@ scoreList.setAttribute("class", "list-group mb-2");
 var goBackbtn = document.createElement("button");;
 var cleareScoresbtn = document.createElement("button");
 
-// Scores array initialized
-var scores = [];
+// Scores array initialized and places any scores from locat storage into array
+var scores = JSON.parse(localStorage.getItem("score"));
 
 // Quiz Score initialized
 var quizScore = 0;
@@ -29,6 +29,7 @@ var answer4 = document.createElement("button");
 //Main Area Elemenent
 var quizEl = document.getElementById("quizArea");
 var brEl = document.createElement("br");
+var timeEl = document.getElementById("timer");
 
 // Boostrap elements
 var row1 = document.createElement("div");
@@ -45,14 +46,19 @@ var col3 = document.createElement("div");
 var questionIndex = 0;
 var questionNo = 1;
 var score = 0;
+var secondsLeft = 75; // time variable
+var timerInterval
 
 //************************ CODE ************************
 
 // Initializes scores key in local storage for use if null (loads for the first time)
-if (scores == null){
+console.log("Scores at start of page: "+ scores)
+if (scores == undefined){
     scores = [];
     localStorage.setItem("score", JSON.stringify(scores));
 }
+
+timeEl.textContent = "Time: " + secondsLeft;
 
 //starts quiz
 start();
@@ -71,6 +77,7 @@ quizEl.addEventListener("click", function(event) {
 
         if (buttonType == "start"){ // If button is the start button
 
+            startTimer();
             console.log("Start button Pressed");
             console.log("Current Scores Array: " + scores )
             clearScreen(); // Clears the screen
@@ -80,6 +87,11 @@ quizEl.addEventListener("click", function(event) {
 
         // If the button is an answer from a question
         if (buttonType == "answer1" || buttonType == "answer2" || buttonType == "answer3" || buttonType == "answer4"){
+
+            if(secondsLeft < 1) {
+                clearInterval(timerInterval);
+                viewFinalScore();
+            }
 
             console.log("Question Number: " + questionNo);
             console.log("Question Lenth: " + questions.length)
@@ -98,6 +110,14 @@ quizEl.addEventListener("click", function(event) {
                     console.log("CORRECT");
                     // Add points if correct
                     quizScore = quizScore + 10;
+                }
+                if(userAnswer != questionAnswer){
+                    console.log("WRONG");
+                    if(quizScore > 0 ){
+                        console.log("WRONG");
+                        quizScore = quizScore - 10;
+                    }
+                    secondsLeft = secondsLeft - 10;
                 }
 
                 clearScreen(); // clears screen
@@ -121,6 +141,8 @@ quizEl.addEventListener("click", function(event) {
             questionIndex = 0;
             questionNo = 1;
             score = 0;
+            secondsLeft = 3;
+            timeEl.textContent = "Time: " + secondsLeft;
 
             //start the first page.
             start();
@@ -151,10 +173,6 @@ quizEl.addEventListener("click", function(event) {
 // Function for Start Screen - COMPLETE
 function start(){
 
-    // Clears screen of any elements
-    clearScreen();
-
-    
     // Setting all elements wthin Quiz Area
     quizEl.setAttribute("class","col-md-6 bg-light text-center pt-2")
 
@@ -336,11 +354,22 @@ function renderHighScores(){
 // function for timer
 function startTimer(){
 
+    timerInterval = setInterval(function() {
+        secondsLeft--;
+        timeEl.textContent = "Time: " + secondsLeft;
+    
+        if(secondsLeft < 1) {
+          clearInterval(timerInterval);
+          viewFinalScore();
+        }
+    
+    }, 1000);
 }
 
 // Function to record the score from the game to all scores
 function recordScore(){
 
+    // clears screen of any elements
     clearScreen();
     
     // sets all references to local variables to use
