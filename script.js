@@ -13,12 +13,10 @@ scoreList.setAttribute("class", "list-group mb-2");
 var goBackbtn = document.createElement("button");;
 var cleareScoresbtn = document.createElement("button");
 
-// High Score
+// Scores array initialized
 var scores = [];
 
-scores = JSON.parse(localStorage.getItem("score"));
-
-// Quiz Score
+// Quiz Score initialized
 var quizScore = 0;
 
 // Question Elements
@@ -27,7 +25,6 @@ var answer1 = document.createElement("button");
 var answer2 = document.createElement("button");
 var answer3 = document.createElement("button");
 var answer4 = document.createElement("button");
-
 
 //Main Area Elemenent
 var quizEl = document.getElementById("quizArea");
@@ -51,13 +48,13 @@ var score = 0;
 
 //************************ CODE ************************
 
-//viewFinalScore();
-
+// Initializes scores key in local storage for use if null (loads for the first time)
 if (scores == null){
     scores = [];
     localStorage.setItem("score", JSON.stringify(scores));
 }
 
+//starts quiz
 start();
 
 //************************ FUNCTIONS & EVENT LISTENSERS ************************
@@ -141,6 +138,7 @@ quizEl.addEventListener("click", function(event) {
         }
 
         if (buttonType == "clearScores"){
+            scores = []; // clears score array;
             localStorage.clear(); // clears the local storage
             renderHighScores(); // rerenders the scores
         }
