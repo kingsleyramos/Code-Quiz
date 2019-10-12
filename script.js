@@ -60,6 +60,7 @@ if (scores == undefined){
     localStorage.setItem("score", JSON.stringify(scores));
 }
 
+// Set timer to 75 in HTML
 timeEl.textContent = "Time: " + secondsLeft;
 
 //starts quiz
@@ -67,18 +68,17 @@ start();
 
 //************************ FUNCTIONS & EVENT LISTENSERS ************************
 
+// Event Listenser for Navigation bar
 navEl.addEventListener("click", function(event){
     var element = event.target;
-
     var elementType = element.getAttribute("data-btnType");
-
     if (elementType == "viewHighScores"){
         clearScreen(); // Clears the screen
         renderHighScores(); // renders all the scores from local storage
     }
 })
 
-
+// Event Listener for Quiz Area
 quizEl.addEventListener("click", function(event) {
     var element = event.target;
 
@@ -101,6 +101,7 @@ quizEl.addEventListener("click", function(event) {
         // If the button is an answer from a question
         if (buttonType == "answer1" || buttonType == "answer2" || buttonType == "answer3" || buttonType == "answer4"){
 
+            // Will clear if seconds ever reached less than 1 second after an answer press
             if(secondsLeft < 1) {
                 clearInterval(timerInterval);
                 viewFinalScore();
@@ -183,7 +184,7 @@ quizEl.addEventListener("click", function(event) {
 });
 
 
-// Function for Start Screen - COMPLETE
+// Function for Start Screen
 function start(){
 
     // Setting all elements wthin Quiz Area
@@ -207,7 +208,7 @@ function start(){
     quizEl.appendChild(startButton);
 }
 
-// Function to degenerate question - COMPLETE
+// Function to degenerate question
 function renderQuestion(num){
 
     // Display Question        
@@ -262,7 +263,7 @@ function renderQuestion(num){
 
 }
 
-// View final Score and input initials after end of quiz - COMPLETE
+// View final Score and input initials after end of quiz
 function viewFinalScore(){
 
     // Clears screen of any elements
@@ -299,12 +300,6 @@ function viewFinalScore(){
     initialsSubmit.setAttribute("id","initialsSubmit");
     initialsSubmit.setAttribute("data-btnType", "initialsSubmit");
     quizEl.appendChild(initialsSubmit);
-}
-
-// Places Scores in Local Storage
-function storedScores() {
-    // Stringify and set "todos" key in localStorage to todos array
-    localStorage.setItem("score", JSON.stringify(scores));
 }
 
 // Function to view all scores
@@ -369,8 +364,9 @@ function startTimer(){
 
     timerInterval = setInterval(function() {
         secondsLeft--;
-        timeEl.textContent = "Time: " + secondsLeft;
+        timeEl.textContent = "Time: " + secondsLeft; // updates timer div
     
+        // Break out of the timer if seconds left reaches less that 0
         if(secondsLeft < 1) {
           clearInterval(timerInterval);
           secondsLeft = 0;
