@@ -51,20 +51,6 @@ var score = 0;
 var secondsLeft = 75; // time variable
 var timerInterval
 
-//************************ CODE ************************
-
-// Initializes scores key in local storage for use if null (loads for the first time)
-console.log("Scores at start of page: "+ scores)
-if (scores == undefined){
-    scores = [];
-    localStorage.setItem("score", JSON.stringify(scores));
-}
-
-// Set timer to 75 in HTML
-timeEl.textContent = "Time: " + secondsLeft;
-
-//starts quiz
-start();
 
 //************************ FUNCTIONS & EVENT LISTENSERS ************************
 
@@ -132,6 +118,7 @@ quizEl.addEventListener("click", function(event) {
                         quizScore = quizScore - 10;
                     }
                     secondsLeft = secondsLeft - 10;
+                    timeEl.textContent = "Time: " + secondsLeft;
                 }
 
                 clearScreen(); // clears screen
@@ -183,7 +170,6 @@ quizEl.addEventListener("click", function(event) {
     }
 });
 
-
 // Function for Start Screen
 function start(){
 
@@ -206,7 +192,7 @@ function start(){
     startButton.setAttribute("id","startButton");
     startButton.setAttribute("data-btnType", "start")
     quizEl.appendChild(startButton);
-}
+};
 
 // Function to degenerate question
 function renderQuestion(num){
@@ -261,7 +247,7 @@ function renderQuestion(num){
         quizEl.appendChild(brEl.cloneNode());
     };
 
-}
+};
 
 // View final Score and input initials after end of quiz
 function viewFinalScore(){
@@ -300,7 +286,7 @@ function viewFinalScore(){
     initialsSubmit.setAttribute("id","initialsSubmit");
     initialsSubmit.setAttribute("data-btnType", "initialsSubmit");
     quizEl.appendChild(initialsSubmit);
-}
+};
 
 // Function to view all scores
 function renderHighScores(){
@@ -357,7 +343,7 @@ function renderHighScores(){
     col1.appendChild(cleareScoresbtn);
     console.log("Scores array after render: " +scores);
     localStorage.setItem("score", JSON.stringify(scores));
-}
+};
 
 // function for timer
 function startTimer(){
@@ -375,7 +361,7 @@ function startTimer(){
         }
     
     }, 1000);
-}
+};
 
 // Function to record the score from the game to all scores
 function recordScore(){
@@ -405,7 +391,7 @@ function recordScore(){
     initialsInput.value = "";
     quizScore = 0;
 
-}
+};
 
 // Function to clear all elements within the quiz area for reuse - COMPLETE
 function clearScreen(){
@@ -444,4 +430,20 @@ function clearScreen(){
     while(col3.firstChild){
         col3.removeChild(col3.firstChild);
     }
+};
+
+
+//************************ CODE ************************
+
+// Initializes scores key in local storage for use if null (loads for the first time)
+console.log("Scores at start of page: "+ scores)
+if (scores == undefined){
+    scores = [];
+    localStorage.setItem("score", JSON.stringify(scores));
 }
+
+// Set timer to 75 in HTML
+timeEl.textContent = "Time: " + secondsLeft;
+
+//starts quiz
+start();
