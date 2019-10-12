@@ -89,7 +89,8 @@ quizEl.addEventListener("click", function(event) {
 
             // Will clear if seconds ever reached less than 1 second after an answer press
             if(secondsLeft < 1) {
-                clearInterval(timerInterval);
+                secondsLeft = 0;
+                timeEl.textContent = "Time: " + secondsLeft;
                 viewFinalScore();
             }
 
