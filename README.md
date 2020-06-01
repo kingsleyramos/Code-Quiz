@@ -1,10 +1,25 @@
-# Homework 4: Code Quiz
+# Code Quiz
 
-## Project Goal
+This is application is a multiple-choice quiz that contains 26 questions on HTML, CSS, and Javascript. It will continuously ask questions as they are being answered with the time limit. The user obtains points to their score answering each question correctly. Incorrect answers will deduct points and time. Their score is recorded and store in memory. Their score is recorded to the High Scores list.
 
-Create a quiz that will continuously ask questions as they are being answered with a limited time, and having the user record their score from the quiz and store and list the stores which the option to delete all scores.
+## Click [Here](https://kingsleyramos.github.io/Code-Quiz/) for deployed application.
+---
 
-## Challenges
+Starting the quiz:
+
+![](images/Start.gif)
+
+Finishing the quiz:
+
+![](images/Finish.gif)
+
+## Tool & Resources
+---
+* [Bootstrap](https://getbootstrap.com/) - CSS framework used
+* [JQuery](https://getbootstrap.com/) - JavaScript library used
+
+## Assignment Challenges
+---
 
 ### Struggle 1: Architecture
 
